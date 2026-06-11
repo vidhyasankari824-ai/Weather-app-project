@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+</head>
+<body>
+
+    <h1>Weather App</h1>
+
+    <!-- INPUT: user city enter pannuvanga -->
+    <input type="text" id="cityInput" placeholder="Enter city name">
+
+    <!-- BUTTON: weather fetch pannum -->
+    <button onclick="getWeather()">Get Weather</button>
+
+    <p id="result"></p>
+
+    <script>
+        function getWeather() {
+
+            // API key (OpenWeather access key)
+            const apiKey = "8a3e29386fc669e066450a3eee8b812e";
+
+            // user enter pannra city get pannrom
+            let city = document.getElementById("cityInput").value;
+
+            // API URL dynamic-a city based fetch
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            // API call
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+
+                    // output display
+                    document.getElementById("result").innerHTML =
+                        "City: " + data.name + "<br>" +
+                        "Temperature: " + data.main.temp + "°C<br>" +
+                        "Humidity: " + data.main.humidity + "%<br>" +
+                        "Weather: " + data.weather[0].description;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                    document.getElementById("result").innerHTML =
+                        "Error: City not found or API issue";
+                });
+        }
+    </script>
+
+</body>
+</html>
